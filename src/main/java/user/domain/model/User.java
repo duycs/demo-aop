@@ -1,208 +1,90 @@
 package user.domain.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
-import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
+	@Column(name = "user_name", nullable = false)
+	private String userName;
 
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+	@Column(name = "password", nullable = false)
+	private String password;
 
-    @Column(name = "email_address", nullable = false)
-    private String email;
+	@Column(name = "email")
+	private String email;
 
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+	@OneToMany(mappedBy = "users")
+    Set<UserRole> userRoles;
 
-    @Column(name = "created_by", nullable = false)
-    @CreatedBy
-    private String createdBy;
+	public User(long id, String userName, String password, String email, Set<UserRole> userRoles) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.userRoles = userRoles;
+	}
 
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", nullable = false)
-    private Date updatedAt;
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-    @Column(name = "updated_by", nullable = false)
-    @LastModifiedBy
-    private String updatedBy;
+	public long getId() {
+		return id;
+	}
 
-  /**
-   * Gets id.
-   *
-   * @return the id
-   */
-  public long getId() {
-        return id;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-  /**
-   * Sets id.
-   *
-   * @param id the id
-   */
-  public void setId(long id) {
-        this.id = id;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-  /**
-   * Gets first name.
-   *
-   * @return the first name
-   */
-  public String getFirstName() {
-        return firstName;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-  /**
-   * Sets first name.
-   *
-   * @param firstName the first name
-   */
-  public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-  /**
-   * Gets last name.
-   *
-   * @return the last name
-   */
-  public String getLastName() {
-        return lastName;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-  /**
-   * Sets last name.
-   *
-   * @param lastName the last name
-   */
-  public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-  /**
-   * Gets email.
-   *
-   * @return the email
-   */
-  public String getEmail() {
-        return email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-  /**
-   * Sets email.
-   *
-   * @param email the email
-   */
-  public void setEmail(String email) {
-        this.email = email;
-    }
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
 
-  /**
-   * Gets created at.
-   *
-   * @return the created at
-   */
-  public Date getCreatedAt() {
-        return createdAt;
-    }
-
-  /**
-   * Sets created at.
-   *
-   * @param createdAt the created at
-   */
-  public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-  /**
-   * Gets created by.
-   *
-   * @return the created by
-   */
-  public String getCreatedBy() {
-        return createdBy;
-    }
-
-  /**
-   * Sets created by.
-   *
-   * @param createdBy the created by
-   */
-  public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-  /**
-   * Gets updated at.
-   *
-   * @return the updated at
-   */
-  public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-  /**
-   * Sets updated at.
-   *
-   * @param updatedAt the updated at
-   */
-  public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-  /**
-   * Gets updated by.
-   *
-   * @return the updated by
-   */
-  public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-  /**
-   * Sets updated by.
-   *
-   * @param updatedBy the updated by
-   */
-  public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", createdAt=" + createdAt +
-                ", createdBy='" + createdBy + '\'' +
-                ", updatedAt=" + updatedAt +
-                ", updatedby='" + updatedBy + '\'' +
-                '}';
-    }
-
-
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+	
+	
+	
 }

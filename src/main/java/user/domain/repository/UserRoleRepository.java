@@ -12,9 +12,10 @@ import user.domain.model.UserRole;
 
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
-	
+
 	@Async
-    //@Query("SELECT * FROM UserRole t WHERE t.user_id = :userId AND t.role_id = :roleId") 
+	// @Query("SELECT * FROM UserRole t WHERE t.user_id = :userId AND t.role_id =
+	// :roleId")
 	public Optional<UserRole> findByUserAndRole(@Param("user_id") Long userId, @Param("role_id") Long roleId);
-	
+
 }

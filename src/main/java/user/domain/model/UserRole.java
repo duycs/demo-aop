@@ -1,6 +1,5 @@
 package user.domain.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -12,14 +11,15 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+
 @Entity
 @Table(name = "users_roles")
 @EntityListeners(AuditingEntityListener.class)
 public class UserRole {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -29,11 +29,23 @@ public class UserRole {
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-	public long getId() {
+	public UserRole(Long id, User user, Role role) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.role = role;
+	}
+
+	public UserRole() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -52,6 +64,6 @@ public class UserRole {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-
-
+	
+	
 }

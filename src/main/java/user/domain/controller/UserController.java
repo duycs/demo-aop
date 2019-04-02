@@ -92,9 +92,8 @@ public class UserController {
 				.orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
 
 		user.setEmail(userDetails.getEmail());
-		user.setLastName(userDetails.getLastName());
-		user.setFirstName(userDetails.getFirstName());
-		user.setUpdatedAt(new Date());
+		user.setUserName(userDetails.getUserName());
+		user.setPassword(userDetails.getPassword());
 		final User updatedUser = userRepository.save(user);
 		return ResponseEntity.ok(updatedUser);
 	}
@@ -129,7 +128,7 @@ public class UserController {
 		UserRole userRole = userRoleRepository.findByUserAndRole(userId, roleId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
 
-		User user = userRepository.findById(userRole.getUser().getId())
+		User user = userRepository.findById(userRole.getRole().getId())
 				.orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
 
 		return ResponseEntity.ok().body(user);

@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -18,27 +19,27 @@ public class Permission {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	//read, write, delete, edit 
-	@Column(name = "permission_name", nullable = false)
-	private String permissionName;
-	
+	// read, write, delete, edit
+	@Column(name = "name", nullable = false)
+	private String name;
+
 	@Column(name = "description", nullable = false)
 	private String description;
-
-	public long getId() {
-		return id;
-	}
 
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	public String getPermissionName() {
-		return permissionName;
+	public String getName() {
+		return name;
 	}
 
-	public void setPermissionName(String permissionName) {
-		this.permissionName = permissionName;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public long getId() {
+		return id;
 	}
 
 	public String getDescription() {
@@ -48,6 +49,5 @@ public class Permission {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
+
 }
