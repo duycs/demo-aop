@@ -1,9 +1,11 @@
 package user.domain.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
 import user.domain.exception.ResourceNotFoundException;
 import user.domain.model.User;
 import user.domain.model.UserRole;
@@ -17,6 +19,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+@Api(value = "Users")
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -31,7 +39,12 @@ public class UserController {
 	 *
 	 * @return the list
 	 */
-	@GetMapping("/")
+	@ApiOperation(value = "View a list of available users", response = List.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
+	@GetMapping()
 	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}
@@ -43,6 +56,7 @@ public class UserController {
 	 * @return the users by id
 	 * @throws ResourceNotFoundException the resource not found exception
 	 */
+	@ApiOperation(value = "Get an user by Id")
 	@GetMapping("/{id}")
 	public ResponseEntity<User> getUsersById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
 		User user = userRepository.findById(userId)
@@ -70,7 +84,8 @@ public class UserController {
 	 * @throws ResourceNotFoundException the resource not found exception
 	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId,
+	public ResponseEntity<User> updateUser(
+			@ApiParam(value = "User Id from which users objects from database table", required = true) @PathVariable(value = "id") Long userId,
 			@Valid @RequestBody User userDetails) throws ResourceNotFoundException {
 
 		User user = userRepository.findById(userId)
@@ -103,13 +118,16 @@ public class UserController {
 	}
 
 	// Methods user by role
+	@PostMapping("/userRole")
+	public UserRole createUserRole(@Valid @RequestBody UserRole userRole) {
+		return userRoleRepository.save(userRole);
+	}
 
 	@GetMapping("/{user_id}/roles/{role_id}")
 	public ResponseEntity<User> getUserByRole(@PathVariable(value = "user_id") Long userId,
 			@PathVariable(value = "role_id") Long roleId) throws Exception {
 		UserRole userRole = userRoleRepository.findByUserAndRole(userId, roleId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
-		;
 
 		User user = userRepository.findById(userRole.getUser().getId())
 				.orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
