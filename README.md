@@ -1,8 +1,4 @@
-# Spring services
-
-#### Business idea
-- Clean house before spring
-- Gift in spring
+# Demo Java micro services
 
 #### Design
 - Java Spring boot
@@ -10,6 +6,7 @@
 - Domain driven design
 - Aspect Oriented Programming
 - 
+
 #### Micro-service tool
 - API gateway
 - Service registry
