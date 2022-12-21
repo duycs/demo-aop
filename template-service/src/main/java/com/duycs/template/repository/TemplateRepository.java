@@ -1,4 +1,4 @@
-package com.duycs.user.repository;
+package com.duycs.template.repository;
 
 import com.duycs.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

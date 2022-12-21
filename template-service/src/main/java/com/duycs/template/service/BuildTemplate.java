@@ -1,3 +1,5 @@
+package com.duycs.template.service;
+
 public abstract class BuildTemplate {
 
 	//template method, final so subclasses can't override

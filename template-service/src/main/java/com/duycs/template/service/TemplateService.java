@@ -1,4 +1,4 @@
-package com.duycs.user.service;
+package com.duycs.template.service;
 
 import com.duycs.user.VO.Department;
 import com.duycs.user.VO.ResponseTemplateVO;

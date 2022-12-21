@@ -37,7 +37,7 @@ public class UserService {
     }
 
     public void deleteUser(int userId) {
-        var userExisting = userRepository.findByUserId(updateUserVM.userId)
+        var userExisting = userRepository.findByUserId(userId)
                 .orElseThrow(() - > new ResourceNotFoundException("User not found for this id :: " + userId));
 
         userRepository.delete(userExisting);

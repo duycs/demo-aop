@@ -1,3 +1,5 @@
+
+package com.duycs.template.service;
 public class TemplateA extends BuildTemplate {
 
     @Override

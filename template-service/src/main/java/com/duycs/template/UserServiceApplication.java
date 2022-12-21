@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 public class TemplateServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserServiceApplication.class, args);
+		SpringApplication.run(TemplateServiceApplication.class, args);
 	}
 
 	@Bean
