@@ -19,13 +19,31 @@ public class UserService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public User saveUser(User user) {
-        log.info("Inside saveUser of UserService");
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public User addUser(AddUserVM addUserVM) {
+        User user = modelMapper.map(addUserVM, User.class);
         return userRepository.save(user);
     }
 
-    public ResponseTemplateVO getUserWithDepartment(Long userId) {
-        log.info("Inside getUserWithDepartment of UserService");
+    public User updateUser(UpdateUserVM updateUserVM) {
+
+        var userExisting = userRepository.findByUserId(updateUserVM.userId)
+                .orElseThrow(() - > new ResourceNotFoundException("User not found for this id :: " + updateUserVM.userId));
+
+        User user = modelMapper.map(updateUserVM, User.class);
+        return userRepository.save(userExisting);
+    }
+
+    public void deleteUser(int userId) {
+        var userExisting = userRepository.findByUserId(updateUserVM.userId)
+                .orElseThrow(() - > new ResourceNotFoundException("User not found for this id :: " + userId));
+
+        userRepository.delete(userExisting);
+    }
+
+    public Optional<ResponseTemplateVO> getUserWithDepartment(Long userId) throws ResourceNotFoundException{
         ResponseTemplateVO vo = new ResponseTemplateVO();
         User user = userRepository.findByUserId(userId);
 

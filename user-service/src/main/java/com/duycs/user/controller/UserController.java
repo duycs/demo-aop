@@ -17,9 +17,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/")
-    public User saveUser(@RequestBody User user) {
-        log.info("Inside saveUser of UserController");
-        return userService.saveUser(user);
+    public User addUser(@RequestBody AddUserVM addUserVM) {
+        return userService.addUser(addUserVM);
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<User> updateUser(@RequestBody UpdateUserVM updateUserVM) {
+        return userService.updateUser(updateUserVM);
     }
 
     @GetMapping("/{id}")
